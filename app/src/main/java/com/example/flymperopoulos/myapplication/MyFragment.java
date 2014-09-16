@@ -20,7 +20,6 @@ public class MyFragment extends Fragment {
 
         public MyFragment() {}
 
-        final ArrayList<String> listchats = new ArrayList<String>();
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -29,22 +28,30 @@ public class MyFragment extends Fragment {
             final EditText myText = (EditText) rootView.findViewById(R.id.text_to_add);
 
             Button myButton = (Button) rootView.findViewById(R.id.add_button);
-            final ListView myListView = (ListView) rootView.findViewById(R.id.my_list_view);
 
-            final ArrayList<String> listchats = new ArrayList<String>();
-            final ChatAdapter myAdapter = new ChatAdapter(getActivity(),R.layout.chat_items,listchats);
+            final ListView leftListView = (ListView) rootView.findViewById(R.id.left_list_view);
+            final ListView rightListView = (ListView) rootView.findViewById(R.id.right_list_view);
+
+            final ArrayList<String> leftchat = new ArrayList<String>();
+            final ArrayList<String> rightchat = new ArrayList<String>();
+            final ChatAdapter leftAdapter = new ChatAdapter(getActivity(),R.layout.chat_items,leftchat);
+            final ChatAdapter rightAdapter = new ChatAdapter(getActivity(),R.layout.chat_items,rightchat);
 
             myButton.setText(R.string.button_press);
             myButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    listchats.add(myText.getText().toString());
+                    leftAdapter.add(myText.getText().toString());
+                    rightAdapter.add(myText.getText().toString());
                     myText.setText("");
-                    myAdapter.notifyDataSetChanged();
-                    myListView.setSelection(listchats.size());
+                    leftAdapter.notifyDataSetChanged();
+                    rightAdapter.notifyDataSetChanged();
+                    leftListView.setSelection(leftchat.size());
+                    rightListView.setSelection(rightchat.size());
                 }
             });
 
-            myListView.setAdapter(myAdapter);
+            leftListView.setAdapter(leftAdapter);
+            rightListView.setAdapter(rightAdapter);
             return rootView;
         }
 }
