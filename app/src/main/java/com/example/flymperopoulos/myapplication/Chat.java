@@ -3,10 +3,9 @@ package com.example.flymperopoulos.myapplication;
 /**
  * Created by flymperopoulos on 9/22/2014.
  */
-
 public class Chat {
     String id, name, time, message;
-    byte[] image;
+    //byte[] image;
 
     //Public Constructor to create a kitty
     //public Chat(String id, String name, String time, String message, byte[] image){
@@ -16,6 +15,10 @@ public class Chat {
         this.time = time;
         this.message = message;
         //this.image = image;
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     /**
@@ -46,7 +49,6 @@ public class Chat {
 
             titleCase.append(c);
         }
-
         return titleCase.toString();
     }
 }
