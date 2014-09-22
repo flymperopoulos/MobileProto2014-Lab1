@@ -8,37 +8,34 @@ package com.example.flymperopoulos.myapplication;
         import android.database.sqlite.SQLiteOpenHelper;
         import android.util.Log;
 
+        import android.content.Context;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.database.sqlite.SQLiteOpenHelper;
+        import android.util.Log;
 
-/**
- * Created by chris on 12/23/13.
- */
 public class ModelDatabase extends SQLiteOpenHelper {
     //Table Name
-    public static final String TABLE_NAME = "Chat_Data";
+    public static final String TABLE_NAME = "ChatLogs";
 
     //Table Fields
-    public static final String KITTY_URL = "url";
-    public static final String KITTY_NAME = "USER_ID";
-    public static final String KITTY_VISIBLE = "visible";
-    public static final String KITTY_FAVORITE = "favorite";
-    public static final String KITTY_CATEGORY = "category";
-    public static final String KITTY_STATUS = "status";
-    public static final String KITTY_IMAGE = "image";
+    public static final String CHAT_ID = "ID";
+    public static final String CHAT_NAME = "name";
+    public static final String CHAT_TIME = "time";
+    public static final String CHAT_MESSAGE = "message";
+    public static final String CHAT_IMAGE = "image";
 
     //Database Info
-    private static final String DATABASE_NAME = "KittyAppDatabase";
+    private static final String DATABASE_NAME = "ChatAppDatabase";
     private static final int DATABASE_VERSION = 1;
 
     // ModelDatabase creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_NAME + "("
-            + KITTY_URL + " TEXT NOT NULL UNIQUE, "
-            + KITTY_NAME + " TEXT NOT NULL, "
-            + KITTY_VISIBLE + " TEXT NOT NULL, "
-            + KITTY_FAVORITE + " TEXT NOT NULL, "
-            + KITTY_CATEGORY + " TEXT NOT NULL, "
-            + KITTY_STATUS + " TEXT NOT NULL, "
-            + KITTY_IMAGE + " BLOB );";
+            + CHAT_ID + " TEXT NOT NULL UNIQUE, "
+            + CHAT_NAME + " TEXT NOT NULL, "
+            + CHAT_TIME + " TEXT NOT NULL, "
+            + CHAT_MESSAGE + " TEXT NOT NULL, "
+            + CHAT_IMAGE + " BLOB );";
 
     //Default Constructor
     public ModelDatabase(Context context){
