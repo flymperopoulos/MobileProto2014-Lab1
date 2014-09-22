@@ -36,11 +36,32 @@ import java.util.TimeZone;
 /**
  * Created by flymperopoulos on 9/11/14.
  */
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+/**
+ * Created by dcelik on 9/11/14.
+ */
 public class MyFragment extends Fragment{
     public MyFragment() {
     }
 
-    String numid = "";
+    HandlerDatabase db;
+    ChatAdapter chatAdapter;
+    ListView listView;
+    int numid = 0;
     String username = "Filippos";
     TimeZone EZT = TimeZone.getTimeZone("GMT-4");
 
@@ -51,14 +72,17 @@ public class MyFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        db = ((MainActivity)getActivity()).db;
+        //db.deleteAllChats();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         final EditText myText = (EditText) rootView.findViewById(R.id.text_to_add);
         Button myButton = (Button) rootView.findViewById(R.id.add_button);
-        final ListView myListView = (ListView) rootView.findViewById(R.id.list_view);
+        listView = (ListView) rootView.findViewById(R.id.list_view);
 
-        final ArrayList<Chat> chats = new ArrayList<Chat>();
-        final ChatAdapter myAdapter = new ChatAdapter(getActivity(), chats);
+        final ArrayList<Chat> chats = db.getAllChats();
+        chatAdapter = new ChatAdapter(getActivity(), chats);
+
         myButton.setText(R.string.button_press);
         myButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -80,18 +104,45 @@ public class MyFragment extends Fragment{
                     String date = String.valueOf(hrs + ":" + mins + ":" + secs + " " +
                             c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + " " +
                             c.get(Calendar.DAY_OF_MONTH) + ", " + c.get(Calendar.YEAR));
-                    Chat toAdd = new Chat(numid, username, date, myText.getText().toString());
-                    myAdapter.add(toAdd);
+                    //Chat toAdd = new Chat(numid, username, date, msg);
+                    while(db.getChatByID(String.valueOf(numid))!=null){
+                        numid++;
+                    }
+                    db.addChatToDatabase(String.valueOf(numid),username,date,msg);
+                    numid++;
+                    //myAdapter.add(toAdd);
                     myText.setText("");
-                    myAdapter.notifyDataSetChanged();
-                    myListView.setSelection(chats.size());
+                    chatAdapter.clear();
+                    chatAdapter.addAll(db.getAllChats());
+                    chatAdapter.notifyDataSetChanged();
+                    listView.setSelection(numid);
                 }
             }
         });
 
-        myListView.setAdapter(myAdapter);
-
-
+        listView.setAdapter(chatAdapter);
         return rootView;
     }
+
+    //When the Fragment is started
+    @Override
+    public void onStart() {
+        super.onStart();
+        refreshFragment();
+    }
+
+    //When the Fragment is resumed
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshFragment();
+    }
+
+    public void refreshFragment(){
+        chatAdapter.clear();
+        chatAdapter.addAll(db.getAllChats());
+        chatAdapter.notifyDataSetChanged();
+        listView.invalidate();
+    }
+
 }
