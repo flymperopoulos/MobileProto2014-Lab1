@@ -10,7 +10,21 @@ package com.example.flymperopoulos.myapplication;
         import android.view.ViewGroup;
 
 
+        import android.app.Activity;
+        import android.app.Fragment;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.Menu;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.view.ViewGroup;
+
+
 public class MainActivity extends Activity {
+
+    HandlerDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +34,8 @@ public class MainActivity extends Activity {
                     .add(R.id.container, new MyFragment())
                     .commit();
         }
-        Log.i(MainActivity.class.getSimpleName(), "FILLIPOS SAYS HELLLOOOOO");
-        HandlerDatabase db = new HandlerDatabase(this);
+        Log.i(MainActivity.class.getSimpleName(), "FILLIPOS SAYS HELLLOOOOO!");
+        db = new HandlerDatabase(this);
         db.open();
     }
 

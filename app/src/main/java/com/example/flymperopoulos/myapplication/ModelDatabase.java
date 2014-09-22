@@ -3,16 +3,16 @@ package com.example.flymperopoulos.myapplication;
 /**
  * Created by flymperopoulos on 9/15/2014.
  */
-        import android.content.Context;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
-        import android.util.Log;
 
-        import android.content.Context;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
-        import android.util.Log;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+
+/**
+ * Created by chris on 12/23/13.
+ */
 public class ModelDatabase extends SQLiteOpenHelper {
     //Table Name
     public static final String TABLE_NAME = "ChatLogs";
@@ -22,7 +22,7 @@ public class ModelDatabase extends SQLiteOpenHelper {
     public static final String CHAT_NAME = "name";
     public static final String CHAT_TIME = "time";
     public static final String CHAT_MESSAGE = "message";
-    public static final String CHAT_IMAGE = "image";
+    //public static final String CHAT_IMAGE = "image";
 
     //Database Info
     private static final String DATABASE_NAME = "ChatAppDatabase";
@@ -34,8 +34,8 @@ public class ModelDatabase extends SQLiteOpenHelper {
             + CHAT_ID + " TEXT NOT NULL UNIQUE, "
             + CHAT_NAME + " TEXT NOT NULL, "
             + CHAT_TIME + " TEXT NOT NULL, "
-            + CHAT_MESSAGE + " TEXT NOT NULL, "
-            + CHAT_IMAGE + " BLOB );";
+            + CHAT_MESSAGE + " TEXT NOT NULL );";
+    //+ CHAT_IMAGE + " BLOB );";
 
     //Default Constructor
     public ModelDatabase(Context context){
