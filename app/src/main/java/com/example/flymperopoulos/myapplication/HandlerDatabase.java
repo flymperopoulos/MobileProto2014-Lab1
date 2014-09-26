@@ -67,7 +67,7 @@ public class HandlerDatabase {
         values.put(ModelDatabase.CHAT_NAME, chat.name);
         values.put(ModelDatabase.CHAT_TIME, chat.time);
         values.put(ModelDatabase.CHAT_MESSAGE, chat.message);
-        database.update(ModelDatabase.TABLE_NAME, values, ModelDatabase.CHAT_ID, null);
+        database.update(ModelDatabase.TABLE_NAME, values, ModelDatabase.CHAT_ID + " = " + chat.id, null);
     }
 
     /**

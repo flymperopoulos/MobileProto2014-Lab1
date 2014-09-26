@@ -24,6 +24,7 @@ public class ChangeUsername {
                         String newName = input.getText().toString();
                         if (newName.equals("")) {
                             Toast.makeText(activity, "Your username cannot be blank!", Toast.LENGTH_SHORT).show();
+
                             return;
                         }
                         MyFragment frag = (MyFragment) activity.getFragmentManager().findFragmentById(R.id.container);

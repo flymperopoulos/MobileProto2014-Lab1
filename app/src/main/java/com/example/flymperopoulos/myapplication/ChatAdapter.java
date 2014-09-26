@@ -8,18 +8,19 @@ import java.util.List;
 
 /**
  * Created by flymperopoulos on 9/11/2014.
- */import android.app.Activity;
+ */
+
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
-/**
- * Created by dcelik on 9/11/14.
- */
 public class ChatAdapter extends ArrayAdapter{
 
     //ArrayList Containing the Image Urls

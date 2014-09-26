@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,6 +62,7 @@ public class MyFragment extends Fragment{
     HandlerDatabase db;
     ChatAdapter chatAdapter;
     ListView listView;
+
     int numid = 0;
     String username = "Filippos";
     TimeZone EZT = TimeZone.getTimeZone("GMT-4");
@@ -68,11 +70,14 @@ public class MyFragment extends Fragment{
     public void setUsername(String str){
         username = str;
     }
+//    public void setText(String txt){
+//        username = txt;
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        db = ((MainActivity)getActivity()).db;
+        db = ((MainActivity) getActivity()).db;
         //db.deleteAllChats();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -84,31 +89,31 @@ public class MyFragment extends Fragment{
         chatAdapter = new ChatAdapter(getActivity(), chats);
 
         myButton.setText(R.string.button_press);
-        myButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Calendar c = Calendar.getInstance(EZT,Locale.US);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance(EZT, Locale.US);
                 String secs = String.valueOf(c.get(Calendar.SECOND));
                 String mins = String.valueOf(c.get(Calendar.MINUTE));
                 String hrs = String.valueOf(c.get(Calendar.HOUR_OF_DAY));
-                if(c.get(Calendar.SECOND)<10){
-                    secs = "0"+secs;
+                if (c.get(Calendar.SECOND) < 10) {
+                    secs = "0" + secs;
                 }
-                if(c.get(Calendar.MINUTE)<10){
-                    mins = "0"+mins;
+                if (c.get(Calendar.MINUTE) < 10) {
+                    mins = "0" + mins;
                 }
-                if(c.get(Calendar.HOUR_OF_DAY)<10){
-                    hrs = "0"+hrs;
+                if (c.get(Calendar.HOUR_OF_DAY) < 10) {
+                    hrs = "0" + hrs;
                 }
                 String msg = myText.getText().toString();
-                if(msg.length()>0) {
+                if (msg.length() > 0) {
                     String date = String.valueOf(hrs + ":" + mins + ":" + secs + " " +
                             c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US) + " " +
                             c.get(Calendar.DAY_OF_MONTH) + ", " + c.get(Calendar.YEAR));
                     //Chat toAdd = new Chat(numid, username, date, msg);
-                    while(db.getChatByID(String.valueOf(numid))!=null){
+                    while (db.getChatByID(String.valueOf(numid)) != null) {
                         numid++;
                     }
-                    db.addChatToDatabase(String.valueOf(numid),username,date,msg);
+                    db.addChatToDatabase(String.valueOf(numid), username, date, msg);
                     numid++;
                     //myAdapter.add(toAdd);
                     myText.setText("");
@@ -120,10 +125,26 @@ public class MyFragment extends Fragment{
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
+
+                new EditingText(getActivity(), new StringCallback() {
+                    @Override
+                    public void handleString(String value) {
+                        Chat chatEdit = (Chat) parent.getItemAtPosition(position);
+                        chatEdit.setMessage(value);
+                        db.updateChat(chatEdit);
+                        refreshFragment();
+                    }
+                }).show();
+
+            }
+        });
+
         listView.setAdapter(chatAdapter);
         return rootView;
     }
-
     //When the Fragment is started
     @Override
     public void onStart() {
@@ -139,8 +160,6 @@ public class MyFragment extends Fragment{
     }
 
     public void refreshFragment(){
-        chatAdapter.clear();
-        chatAdapter.addAll(db.getAllChats());
         chatAdapter.notifyDataSetChanged();
         listView.invalidate();
     }
