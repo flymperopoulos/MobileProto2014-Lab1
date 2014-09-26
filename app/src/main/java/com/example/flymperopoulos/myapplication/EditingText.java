@@ -21,7 +21,7 @@ public class EditingText extends AlertDialog.Builder {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String newText = input.getText().toString();
-                        if (newText.equals("fuck")) {
+                        if (newText.equals("f***")) {
                             Toast.makeText(context, "Don't use the f word when texting!", Toast.LENGTH_SHORT).show();
 
                             return;
