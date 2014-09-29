@@ -149,7 +149,6 @@ public class MyFragment extends Fragment{
                         listView.setSelection(numid);
                     }
                 }).show();
-
             }
         });
 
