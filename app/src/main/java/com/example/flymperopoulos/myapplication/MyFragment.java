@@ -137,6 +137,17 @@ public class MyFragment extends Fragment{
                         db.updateChat(chatEdit);
                         refreshFragment();
                     }
+
+                    @Override
+                    public void handleDelete() {
+                        Chat chatDeleted = (Chat) parent.getItemAtPosition(position);
+                        db.deleteChatById(chatDeleted.getId());
+                        refreshFragment();
+                        chatAdapter.clear();
+                        chatAdapter.addAll(db.getAllChats());
+                        chatAdapter.notifyDataSetChanged();
+                        listView.setSelection(numid);
+                    }
                 }).show();
 
             }
@@ -161,7 +172,6 @@ public class MyFragment extends Fragment{
 
     public void refreshFragment(){
         chatAdapter.notifyDataSetChanged();
-        listView.invalidate();
     }
 
 }

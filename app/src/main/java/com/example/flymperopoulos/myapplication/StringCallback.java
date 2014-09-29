@@ -5,4 +5,5 @@ package com.example.flymperopoulos.myapplication;
  */
 public interface StringCallback {
     public void handleString(String value);
+    public void handleDelete();
 }

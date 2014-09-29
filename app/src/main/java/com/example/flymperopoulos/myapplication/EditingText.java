@@ -36,6 +36,21 @@ public class EditingText extends AlertDialog.Builder {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                     }
+                })
+                .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       dialogInterface.dismiss();
+                       callback.handleDelete();
+                       Toast.makeText(context, "Your message was deleted", Toast.LENGTH_SHORT).show();
+                    }
                 });
+    }
+
+            public void onClick(DialogInterface dialog, int id) {
+
+                //...
+
+                ;
     }
 }
